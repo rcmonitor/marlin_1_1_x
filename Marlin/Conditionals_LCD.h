@@ -379,11 +379,15 @@
     #undef TEMP_SENSOR_1_AS_REDUNDANT
     #undef HOTEND_OFFSET_X
     #undef HOTEND_OFFSET_Y
-  #else                                                         // Two hotends
-    #define HOTENDS       EXTRUDERS
-    #if ENABLED(SWITCHING_NOZZLE) && !defined(HOTEND_OFFSET_Z)
-      #define HOTEND_OFFSET_Z { 0 }
-    #endif
+  #else     // Two hotends
+//    #if defined(RCM_MOD)
+//        #define HOTENDS 2
+//    #else
+        #define HOTENDS       EXTRUDERS
+        #if ENABLED(SWITCHING_NOZZLE) && !defined(HOTEND_OFFSET_Z)
+          #define HOTEND_OFFSET_Z { 0 }
+        #endif
+//    #endif
   #endif
 
   #if ENABLED(SWITCHING_EXTRUDER) || ENABLED(MIXING_EXTRUDER)   // Unified E axis

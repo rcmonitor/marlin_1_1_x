@@ -167,8 +167,8 @@
 //
 // Temperature Sensors
 //
-#define TEMP_0_PIN         13   // Analog Input
-#define TEMP_1_PIN         15   // Analog Input
+#define TEMP_0_PIN         15   // Analog Input  //modified for semitec
+#define TEMP_1_PIN         3    //15   // Analog Input // pt-100
 #define TEMP_BED_PIN       14   // Analog Input
 
 // SPI for Max6675 or Max31855 Thermocouple
@@ -458,19 +458,19 @@
       #define DOGLCD_CS         25
 
       // GLCD features
-      //#define LCD_CONTRAST   190
+      #define LCD_CONTRAST   10
       // Uncomment screen orientation
       //#define LCD_SCREEN_ROT_90
       //#define LCD_SCREEN_ROT_180
       //#define LCD_SCREEN_ROT_270
 
-      #define BEEPER_PIN        37
+      #define BEEPER_PIN        33	//37
       // not connected to a pin
       #define LCD_BACKLIGHT_PIN 65 // backlight LED on A11/D65
 
-      #define BTN_EN1           31
-      #define BTN_EN2           33
-      #define BTN_ENC           35
+      #define BTN_EN1           35	//31
+      #define BTN_EN2           37
+      #define BTN_ENC           31	//35
 
       #define SDSS              53
       #define SD_DETECT_PIN     49

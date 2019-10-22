@@ -94,4 +94,7 @@
 #elif THERMISTOR_ID == 999
   #define THERMISTOR_NAME "Dummy 2"
 
+#elif THERMISTOR_ID == 42
+    #define THERMISTOR_NAME "Heating element"
+
 #endif // THERMISTOR_ID

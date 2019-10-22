@@ -725,6 +725,16 @@ void kill_screen(const char* lcd_msg) {
 
 #if ENABLED(ULTIPANEL)
 
+/**
+ * @by_rcmonitor
+ * homes z axis then moves nozzle 0.15 mm up
+ */
+	void lcd_home_z_offset() {
+        enqueue_and_echo_commands_P(PSTR("G28 Z"));
+        enqueue_and_echo_commands_P(PSTR("G1 Z0.8 F1000"));
+        enqueue_and_echo_commands_P(PSTR("G1 X15 Y15 Z0.15 F500"));
+}
+
   /**
    *
    * Audio feedback for controller clicks
@@ -1924,7 +1934,10 @@ void kill_screen(const char* lcd_msg) {
         if (!(axis_known_position[X_AXIS] && axis_known_position[Y_AXIS] && axis_known_position[Z_AXIS]))
           MENU_ITEM(gcode, MSG_AUTO_HOME, PSTR("G28"));
         else
-      #endif
+	  #endif
+
+//		MENU_ITEM(function, MSG_HOME_Z_OFFSET, lcd_home_z_offset)
+
         if (leveling_is_valid()) {
           new_level_state = planner.leveling_active;
           MENU_ITEM_EDIT_CALLBACK(bool, MSG_BED_LEVELING, &new_level_state, _lcd_toggle_bed_leveling);
@@ -2536,6 +2549,8 @@ void kill_screen(const char* lcd_msg) {
       MENU_ITEM(gcode, MSG_AUTO_HOME_Y, PSTR("G28 Y"));
       MENU_ITEM(gcode, MSG_AUTO_HOME_Z, PSTR("G28 Z"));
     #endif
+
+	MENU_ITEM(function, MSG_HOME_Z_OFFSET, lcd_home_z_offset);
 
     //
     // Level Bed

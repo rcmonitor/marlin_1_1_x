@@ -69,6 +69,9 @@
 #ifndef MSG_AUTO_HOME
   #define MSG_AUTO_HOME                       _UxGT("Auto home")
 #endif
+#ifndef MSG_HOME_Z_OFFSET
+  #define MSG_HOME_Z_OFFSET                       _UxGT("Home Z 15")
+#endif
 #ifndef MSG_AUTO_HOME_X
   #define MSG_AUTO_HOME_X                     _UxGT("Home X")
 #endif

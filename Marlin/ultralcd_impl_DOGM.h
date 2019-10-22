@@ -386,6 +386,15 @@ FORCE_INLINE void _draw_centered_temp(const int16_t temp, const uint8_t x, const
   lcd_printPGM(PSTR(LCD_STR_DEGREE " "));
 }
 
+FORCE_INLINE void _draw_centered_temp_cents(const float temp, const uint8_t x, const uint8_t y) {
+    const uint8_t degsize = 6 * (temp >= 100 ? 3 : temp >= 10 ? 2 : 1); // number's pixel width
+    static char c_temp[5];
+    strcpy(c_temp, ftostr31(temp));
+    u8g.setPrintPos(x - (28 - degsize) / 2, y); // move left if shorter
+    lcd_print(c_temp);
+    lcd_printPGM(PSTR(LCD_STR_DEGREE " "));
+}
+
 FORCE_INLINE void _draw_heater_status(const uint8_t x, const int8_t heater, const bool blink) {
   #if !HEATER_IDLE_HANDLER
     UNUSED(blink);
@@ -412,7 +421,7 @@ FORCE_INLINE void _draw_heater_status(const uint8_t x, const int8_t heater, cons
     _draw_centered_temp((isBed ? thermalManager.degTargetBed() : thermalManager.degTargetHotend(heater)) + 0.5, x, 7); }
 
   if (PAGE_CONTAINS(21, 28))
-    _draw_centered_temp((isBed ? thermalManager.degBed() : thermalManager.degHotend(heater)) + 0.5, x, 28);
+    _draw_centered_temp_cents((isBed ? thermalManager.degBed() : thermalManager.degHotend(heater)), x, 28);
 
   if (PAGE_CONTAINS(17, 20)) {
     const uint8_t h = isBed ? 7 : 8,
@@ -516,7 +525,7 @@ static void lcd_implementation_status_screen() {
 
     // Heated bed
     #if HOTENDS < 4 && HAS_TEMP_BED
-      _draw_heater_status(81, -1, blink);
+      _draw_heater_status(81 - 3, -1, blink);
     #endif
 
     #if HAS_FAN0
@@ -626,9 +635,12 @@ static void lcd_implementation_status_screen() {
 
   #define XYZ_BASELINE (30 + INFO_FONT_HEIGHT)
 
-  #define X_LABEL_POS  3
-  #define X_VALUE_POS 11
-  #define XYZ_SPACING 40
+//  #define X_LABEL_POS  3
+//  #define X_VALUE_POS 11
+  #define X_LABEL_POS  1
+  #define X_VALUE_POS 6
+//    #define XYZ_SPACING 40
+    #define XYZ_SPACING 43
 
   #if ENABLED(XYZ_HOLLOW_FRAME)
     #define XYZ_FRAME_TOP 29
@@ -642,15 +654,18 @@ static void lcd_implementation_status_screen() {
   // When axis is homed but axis_known_position is false the axis letters are blinking 'X' <-> ' '.
   // When everything is ok you see a constant 'X'.
 
-  static char xstring[5], ystring[5], zstring[7];
+//    static char xstring[5], ystring[5], zstring[7];
+  static char xstring[7], ystring[7], zstring[7];
   #if ENABLED(FILAMENT_LCD_DISPLAY) && DISABLED(SDSUPPORT)
     static char wstring[5], mstring[4];
   #endif
 
   // At the first page, regenerate the XYZ strings
   if (page.page == 0) {
-    strcpy(xstring, ftostr4sign(LOGICAL_X_POSITION(current_position[X_AXIS])));
-    strcpy(ystring, ftostr4sign(LOGICAL_Y_POSITION(current_position[Y_AXIS])));
+//      strcpy(xstring, ftostr4sign(LOGICAL_X_POSITION(current_position[X_AXIS])));
+      strcpy(xstring, ftostr41sign(LOGICAL_X_POSITION(current_position[X_AXIS])));
+      strcpy(ystring, ftostr41sign(LOGICAL_Y_POSITION(current_position[Y_AXIS])));
+//      strcpy(ystring, ftostr41sign(LOGICAL_Y_POSITION(current_position[Y_AXIS])));
     strcpy(zstring, ftostr52sp(FIXFLOAT(LOGICAL_Z_POSITION(current_position[Z_AXIS]))));
     #if ENABLED(FILAMENT_LCD_DISPLAY)
       strcpy(wstring, ftostr12ns(filament_width_meas));

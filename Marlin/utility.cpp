@@ -138,7 +138,18 @@ void safe_delay(millis_t ms) {
     return &conv[1];
   }
 
-  #if ENABLED(LCD_DECIMAL_SMALL_XY)
+// Convert signed float to fixed-length string with 023.4 / -23.4 format
+char *ftostr31(const float &x) {
+    long xx = x * 10;
+    conv[2] = MINUSOR(xx, RJDIGIT(xx, 1000));
+    conv[3] = DIGIMOD(xx, 100);
+    conv[4] = DIGIMOD(xx, 10);
+    conv[5] = '.';
+    conv[6] = DIGIMOD(xx, 1);
+    return &conv[2];
+}
+
+#if ENABLED(LCD_DECIMAL_SMALL_XY)
 
     // Convert float to rj string with 1234, _123, -123, _-12, 12.3, _1.2, or -1.2 format
     char *ftostr4sign(const float &fx) {
