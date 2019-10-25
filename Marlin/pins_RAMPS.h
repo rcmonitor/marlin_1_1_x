@@ -191,9 +191,10 @@
 //
 // Temperature Sensors
 //
-#define TEMP_0_PIN         15   // Analog Input  //modified for semitec
-#define TEMP_1_PIN         3    //15   // Analog Input // pt-100
+#define TEMP_0_PIN         13   // Analog Input  //modified for semitec
+#define TEMP_1_PIN         15    //15   // Analog Input // pt-100
 #define TEMP_BED_PIN       14   // Analog Input
+#define TEMP_CHAMBER_PIN  	3
 
 // SPI for Max6675 or Max31855 Thermocouple
 #if DISABLED(SDSUPPORT)
@@ -509,7 +510,7 @@
       #define BTN_ENC           31	//35
 
       #define SD_DETECT_PIN     49
-      #define KILL_PIN          41
+      #define KILL_PIN          64  //41
 
     #elif ENABLED(MINIPANEL)
 

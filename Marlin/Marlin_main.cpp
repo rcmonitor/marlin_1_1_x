@@ -8465,6 +8465,7 @@ inline void gcode_M105() {
   #if HAS_TEMP_SENSOR
     SERIAL_PROTOCOLPGM(MSG_OK);
     thermalManager.print_heaterstates();
+    serial_echopair_PGM("chamber: ", thermalManager.rawChamberTemp());
   #else // !HAS_TEMP_SENSOR
     SERIAL_ERROR_START();
     SERIAL_ERRORLNPGM(MSG_ERR_NO_THERMISTORS);

@@ -777,7 +777,7 @@ void kill_screen(const char* lcd_msg) {
   lcd_kill_screen();
 }
 
-#if ENABLED(ULTIPANEL)
+//#if ENABLED(ULTIPANEL)
 
 /**
  * @by_rcmonitor
